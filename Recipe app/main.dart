@@ -7,8 +7,7 @@ import 'dart:io';
 import 'Recipe_Organizer.dart';
 
 void main() {
-  print(
-      "---------------------------Welcome To My dart Project--------------------------- ");
+  print("----------------Welcome To My dart Project----------------");
 
   print("here is the list of things you can do on the app : ");
   print(" '1' --> Recipe Organizer ");
@@ -21,7 +20,7 @@ void main() {
   String? userInput = stdin.readLineSync();
 
   if (userInput == "1") {
-    recipeOrganizer();
+    // recipeOrganizer();
   } else if (userInput == "2") {
   } else if (userInput == "3") {
   } else {}
