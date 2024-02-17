@@ -1,4 +1,4 @@
 passwordApp() {
-  print("Welcome to recipe organizer app ; ");
+  print("Welcome to Password Generator app ; ");
   print("---------------------------------------------");
 }

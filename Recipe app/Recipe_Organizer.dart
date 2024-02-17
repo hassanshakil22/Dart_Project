@@ -1,12 +1,6 @@
 import 'dart:io';
 
-import 'Recipe_Organizer.dart';
-import 'dart:io';
-
-import 'RecipeHandler.dart';
-
-recipeOrganizer(
-    Map<String, List<String>> recipes, RecipefileHandler recipefileHandler) {
+recipeOrganizer() {
   print("Welcome to recipe organizer app ; ");
   print("---------------------------------------------");
 
@@ -17,11 +11,7 @@ recipeOrganizer(
   String? input = stdin.readLineSync();
 
 //default recipes
-  Map<String, List> recipes = {
-    "BIRYANI": ['Rice', 'Chicken', "Onion", "Biryani masala"],
-    "NIHARI": ["flour", "Onion", "Yogurt", "Nihari masala"],
-    "QOURMA": ["Meat", "Yougurt", "Qourma masala"],
-  };
+  Map<String, List> recipes = loadRecipes();
 
   if (input == "1") {
     addRecipe(recipes);
@@ -32,6 +22,7 @@ recipeOrganizer(
   } else {
     print("invalid input");
   }
+  return recipes;
 }
 
 // RECIPE ADDING MAIN FUNCTION
@@ -44,6 +35,7 @@ addRecipe(Map recipes) {
   } else {
     List ingredients = recipeAddition();
     recipes[recipeName] = ingredients;
+    writeRecipes(recipes);
     print("recipe added successfully");
     printRecipe(recipes);
   }
@@ -61,6 +53,7 @@ editRecipe(Map recipes) {
     print("write new recipe ");
     List newIngredients = recipeAddition();
     recipes[input] = newIngredients;
+    writeRecipes(recipes);
     print("upgraded Recipe list");
     printRecipe(recipes);
   } else {
@@ -76,6 +69,7 @@ removeRecipe(Map recipes) {
   input = input.toUpperCase();
   if (recipes.containsKey(input)) {
     recipes.remove(input);
+    writeRecipes(recipes);
     print("updated Recipe List");
     printRecipe(recipes);
   } else {
@@ -106,70 +100,34 @@ printRecipe(recipes) {
   }
 }
 
-// -----------------------------------------------------------------------------------------------------
+// ---------------------------------------------------------------------------------------------------
 
-class RecipefileHandler {
-  String? _filepath;
+//  handling  file operations
+var file = File("Recipe app/Recipes.txt");
 
-  RecipefileHandler(this._filepath);
+writeRecipes(Map recipes) {
+  var lines =
+      recipes.entries.map((e) => "${e.key}: ${e.value.join(",")}").toList();
+  file.writeAsStringSync(lines.join('\n'));
+}
 
-// recipe reading method
-  List<String> readRecipes() {
-    try {
-      var file = File(this
-          ._filepath!); // creating a file of the filepath and  asigning it to file variable
-      return file
-          .readAsLinesSync(); //reading this file  line by line and returning them in list format
-    } catch (e) {
-      return []; //if error occurs returning an empty file
-    }
-  }
-
-// recipe writing method
-  void writeRecipes(Map<String, List<String>> recipes) {
-    var lines = recipes.entries
-        .map((entry) => '${entry.key}:${entry.value.join(',')}')
-        .toList();
-//recipes.entries returns an iterable of MapEntry<String, List<String>>. It represents each recipe's name and its list of ingredients.
-
-// .map((entry) => '${entry.key}:${entry.value.join(',')}') applies a transformation to each MapEntry. It converts each entry into a formatted string where the key (recipe name) is followed by a colon, and the values (ingredients) are joined by commas.
-
-// .toList() converts the iterable of formatted strings into a list of strings.
-
-// So, lines is a list of strings, where each string represents a recipe in the format "recipeName:ingredient1,ingredient2,...". This list of strings will be written to the file
-    var file = File(this._filepath!);
-    file.writeAsStringSync(
-        lines.join('\n')); // writing the list by a newline using join func
+readRecipes() {
+  try {
+    return file.readAsLinesSync();
+  } catch (e) {
+    return [];
   }
 }
 
-void main() {
-  var recipeFilePath = "recipes.txt";
-  var recipeFileHandler =
-      RecipefileHandler(recipeFilePath); // making the object and giving it path
-  var recipes = loadrecipes(
-      recipeFileHandler); //loading recipes by getting a map of string and list of recipes/ingredients from load recipes and assigning it to recipes
-  recipeOrganizer(recipes, recipeFileHandler);
-  saveRecipes(recipes, recipeFileHandler);
-}
-
-Map<String, List<String>> loadrecipes(RecipefileHandler recipefileHandler) {
-  var lines = recipefileHandler
-      .readRecipes(); // list of recipes by [recipename:ingredients]
-  var recipes = <String, List<String>>{}; // creatintg an empty map
+loadRecipes() {
+  var lines = readRecipes();
+  // print(lines);
+  var recipes = <String, List>{};
   for (var line in lines) {
-    var parts = line.split(
-        ":"); //splitting in each line at ":" and putting it on different indexes on the list
-    var recipeName = parts[0]; // taking first index which is recipename
-    var ingredients = parts[1].split(
-        ","); // ingredients which were a string now into a list of string with each string bieng a single ingredient
-    recipes[recipeName] =
-        ingredients; // now that empty map is added with recipe name as key and ingredients as values
+    var parts = line.split(':');
+    var recipename = parts[0];
+    var ing = parts[1].split(",");
+    recipes[recipename] = ing;
   }
-  return recipes;
-}
-
-void saveRecipes(
-    Map<String, List<String>> recipes, RecipefileHandler recipefileHandler) {
-  recipefileHandler.writeRecipes(recipes);
+  return (recipes); // returning map  of recipes
 }

@@ -20,7 +20,7 @@ void main() {
   String? userInput = stdin.readLineSync();
 
   if (userInput == "1") {
-    // recipeOrganizer();
+    recipeOrganizer();
   } else if (userInput == "2") {
   } else if (userInput == "3") {
   } else {}
