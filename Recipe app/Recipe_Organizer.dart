@@ -7,6 +7,8 @@ recipeOrganizer() {
   print("To add Enter --> 1 ");
   print("To Edit Enter --> 2 ");
   print("To Remove Enter --> 3 ");
+  print("To View All Recipes --> 4 ");
+
   stdout.write("--> ");
   String? input = stdin.readLineSync();
 
@@ -19,6 +21,8 @@ recipeOrganizer() {
     editRecipe(recipes);
   } else if (input == "3") {
     removeRecipe(recipes);
+  } else if (input == "4") {
+    viewAllRecipes(recipes);
   } else {
     print("invalid input");
   }
@@ -33,7 +37,7 @@ addRecipe(Map recipes) {
   if (recipes.containsKey(recipeName)) {
     print("This recipe already exists.");
   } else {
-    List ingredients = recipeAddition();
+    List<String> ingredients = recipeAddition();
     recipes[recipeName] = ingredients;
     writeRecipes(recipes);
     print("recipe added successfully");
@@ -77,8 +81,12 @@ removeRecipe(Map recipes) {
   }
 }
 
-List recipeAddition() {
-  List ingredients = [];
+viewAllRecipes(recipes) {
+  printRecipe(recipes);
+}
+
+List<String> recipeAddition() {
+  List<String> ingredients = [];
   bool continuation = true;
   print("enter the recipe :  \n enter q to quit writing");
   while (continuation) {
@@ -88,7 +96,7 @@ List recipeAddition() {
     if (ingredient == "q") {
       continuation = false;
     } else {
-      ingredients.add(ingredient);
+      ingredients.add(ingredient ?? "null");
     }
   }
   return ingredients;
@@ -119,14 +127,15 @@ readRecipes() {
   }
 }
 
-loadRecipes() {
-  var lines = readRecipes();
+Map<String, List<String>> loadRecipes() {
+  var lines =
+      readRecipes(); //returning lines list in the form of list ["Recipename : ing1,ing2,ing3 ", Recipename : ing1,ing2,ing3 , .. ...]
   // print(lines);
-  var recipes = <String, List>{};
+  var recipes = <String, List<String>>{};
   for (var line in lines) {
-    var parts = line.split(':');
+    var parts = line.split(':'); //["Recipename ", "ing1,ing2,ing3",...]
     var recipename = parts[0];
-    var ing = parts[1].split(",");
+    var ing = parts[1].split(","); //['ing1','ing2','ing3',..]
     recipes[recipename] = ing;
   }
   return (recipes); // returning map  of recipes
