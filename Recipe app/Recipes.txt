@@ -1,3 +1,5 @@
-HASSAN:       dadad,adad,adad
-BIRYANI:    adada,da,dadad,a,dada
-SALAD:  mayo,lettuce,cabbage,coriander
+HASSAN: dadad,adad,adad
+BIRYANI: adada,da,dadad,a,dada
+SALAD: mayo,lettuce,cabbage,coriander
+DAD:  ad,ad,a,da,dq
+CHICKEN HANDI : abc,abc,abc,pqr,pqr,xyz
