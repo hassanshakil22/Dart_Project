@@ -1,13 +1,13 @@
 import 'dart:io';
 
 recipeOrganizer() {
-  print("Welcome to recipe organizer app ; ");
+  print("********** Welcome to recipe organizer app **********");
   print("---------------------------------------------");
 
-  print("To add Enter --> 1 ");
-  print("To Edit Enter --> 2 ");
-  print("To Remove Enter --> 3 ");
-  print("To View All Recipes --> 4 ");
+  print("--> To add Enter --> 1 ");
+  print("--> To Edit Enter --> 2 ");
+  print("--> To Remove Enter --> 3 ");
+  print("--> To View All Recipes --> 4 ");
 
   stdout.write("--> ");
   String? input = stdin.readLineSync();
@@ -24,23 +24,24 @@ recipeOrganizer() {
   } else if (input == "4") {
     viewAllRecipes(recipes);
   } else {
-    print("invalid input");
+    print("***********invalid input***********");
   }
   return recipes;
 }
 
 // RECIPE ADDING MAIN FUNCTION
 addRecipe(Map recipes) {
-  print("\n Enter the name of the recipe : ");
+  print("\n*********** Enter the name of the recipe ***********");
   String? recipeName = stdin.readLineSync()!;
   recipeName = recipeName.toUpperCase();
   if (recipes.containsKey(recipeName)) {
-    print("This recipe already exists.");
+    print(
+        "**********************This recipe already exists.**********************");
   } else {
     List<String> ingredients = recipeAddition();
     recipes[recipeName] = ingredients;
     writeRecipes(recipes);
-    print("recipe added successfully");
+    print("***********recipe added successfully***********");
     printRecipe(recipes);
   }
 }
@@ -48,17 +49,19 @@ addRecipe(Map recipes) {
 //RECIPE EDITING MAIN FUCNTIION
 editRecipe(Map recipes) {
   printRecipe(recipes);
-  print("Enter the name of the recipe do you want to edit");
+  print(
+      "***********Enter the name of the recipe do you want to edit***********");
   stdout.write("-->");
   String? input = stdin.readLineSync()!;
   input = input.toUpperCase();
   if (recipes.containsKey(input)) {
-    print("Old Recipe ${recipes[input]}");
-    print("write new recipe ");
+    print("---m >Old Recipe ${recipes[input]}");
+    print("*********** write new recipe ***********");
     List newIngredients = recipeAddition();
     recipes[input] = newIngredients;
     writeRecipes(recipes);
-    print("upgraded Recipe list");
+    print(
+        "upgraded Recipe list ${String.fromCharCode(25)}"); //${String.fromCharCode(25)}down arrow key
     printRecipe(recipes);
   } else {
     print("No such recipe ");
@@ -74,10 +77,10 @@ removeRecipe(Map recipes) {
   if (recipes.containsKey(input)) {
     recipes.remove(input);
     writeRecipes(recipes);
-    print("updated Recipe List");
+    print("updated Recipe List ${String.fromCharCode(25)}");
     printRecipe(recipes);
   } else {
-    print("no such Recipe");
+    print("******no such Recipe******");
   }
 }
 
@@ -88,7 +91,7 @@ viewAllRecipes(recipes) {
 List<String> recipeAddition() {
   List<String> ingredients = [];
   bool continuation = true;
-  print("enter the recipe :  \n enter q to quit writing");
+  print("******enter the recipe :*********  \n ---> enter q to quit writing");
   while (continuation) {
     stdout.write("-->");
     String? ingredient = stdin.readLineSync();

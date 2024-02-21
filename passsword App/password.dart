@@ -4,10 +4,10 @@ import 'dart:math';
 passwordApp() {
   print("Welcome to Password Generator app ; ");
   print("---------------------------------------------");
-  print("to GENERATE a Password Enter --> 1");
-  print("to SAVE a Password Enter --> 2");
-  print("to SEE all your previous passwords Enter --> 3 ");
-  print("to REMOVE all Passwords Enter --> 4");
+  print("***to GENERATE a Password Enter --> 1***");
+  print("***to SAVE a Password Enter --> 2***");
+  print("***to SEE all your previous passwords Enter --> 3*** ");
+  print("***to REMOVE all Passwords Enter --> 4***");
   stdout.write("--> ");
   String? uInput = stdin.readLineSync();
 
@@ -25,11 +25,11 @@ passwordApp() {
 }
 
 passwordGenerator() {
-  print("write name of App :");
+  print("---write name of App :");
   stdout.write("-->");
   String? appName = stdin.readLineSync()!.toUpperCase();
 
-  stdout.write("enter the Length of Characters of Password --> ");
+  stdout.write("_____enter the Length of Characters of Password --> _____");
   String? input = stdin.readLineSync();
   int pwLength = int.parse(input!);
   var wordList = [];
@@ -52,10 +52,10 @@ passwordGenerator() {
 }
 
 addPasswords() {
-  print("write name of App :");
+  print("---> write name of App :");
   stdout.write("-->");
   String? appName = stdin.readLineSync()!.toUpperCase();
-  print("write Your password");
+  print("---> write Your password");
   stdout.write("--> ");
   String? pw = stdin.readLineSync();
   String password = "$appName\n$pw";
